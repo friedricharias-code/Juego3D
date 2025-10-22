@@ -1,35 +1,53 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
     private Animator animator;
     private Rigidbody rigidbody;
-    [SerializeField] private int vida = 100;
 
     // === Cooldown de daño ===
     [SerializeField] private float damageCooldown = 0.3f; // en segundos
     private float nextDamageTime = 0f;
-    
+
+    [Header("Vida")]
+    [SerializeField] private float vida = 100f;
+    [SerializeField] Image barraVida;
+    private float maxVida;
+
     [Header("Audio")]
     [SerializeField] AudioClip gameOverSound;
     [SerializeField] AudioClip hitSound;
     private AudioSource audioSource;
 
-    [Header("Canvas")]
-    [SerializeField] private GameObject gameOverCanvas;
-    [SerializeField] private GameObject gameCanvas;
+    [Header("Paneles")]
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gamePanel;
+
+    private PlayerMovement playerMovementScript;
+    private EnemyMovement enemyMovementScriptCh30;
+    private EnemyMovement enemyMovementScriptParasite;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        maxVida = vida;
+        playerMovementScript = GameObject.Find("Ch22_nonPBR").GetComponent<PlayerMovement>();
+        enemyMovementScriptCh30 = GameObject.Find("Ch30_nonPBR").GetComponent<EnemyMovement>();
+        enemyMovementScriptParasite = GameObject.Find("Parasite L Starkie").GetComponent<EnemyMovement>();
+    }
+
+    void Update()
+    {
+        barraVida.fillAmount = vida / maxVida;
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemigo"))
             RecibirDaño();
     }
 
@@ -43,7 +61,7 @@ public class GameOver : MonoBehaviour
         nextDamageTime = Time.time + damageCooldown;
 
         // ↓ primero baja vida
-        vida = Mathf.Max(vida - 1, 0);
+        vida = Mathf.Max(vida - 10, 0);
 
         if (vida <= 0)
         {
@@ -58,9 +76,11 @@ public class GameOver : MonoBehaviour
     void Perder()
     {
         animator.ResetTrigger("Hurt"); // evita que Hurt bloquee GameOver
-        rigidbody.linearVelocity = Vector2.zero; // detiene el movimiento
-        gameOverCanvas.SetActive(true);
-        gameCanvas.SetActive(false);
+        playerMovementScript.enabled = false;
+        enemyMovementScriptCh30.enabled = false;
+        enemyMovementScriptParasite.enabled = false;
+        gameOverPanel.SetActive(true);
+        gamePanel.SetActive(false);
         audioSource.PlayOneShot(gameOverSound);
     }
 

@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && animator.GetBool("enSuelo"))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }

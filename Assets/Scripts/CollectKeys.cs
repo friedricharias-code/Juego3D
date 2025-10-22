@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class CollectKeys : MonoBehaviour
 {
-    private bool collected = false;
+    [Header("Text")]
+    [SerializeField] private TMPro.TextMeshProUGUI keyText;
+    private int keysCollected = 0;
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collected) return;
         if (collision.gameObject.CompareTag("llave"))
         {
-            collected = true;
+            keysCollected++;
+            keyText.text = "Llaves: " + keysCollected;
             Destroy(collision.gameObject);
         }
     }
