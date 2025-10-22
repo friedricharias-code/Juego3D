@@ -6,7 +6,7 @@ public class MouseLook : MonoBehaviour
     public float mouseSensitivity = 0.1f;
     public Transform playerBody;
 
-    private float xRotation = 0f;
+    private float xRotation = 5f;
     private Vector2 lookInput;
 
     public void OnLook(InputAction.CallbackContext context)

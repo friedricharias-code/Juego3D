@@ -6,14 +6,13 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private Transform transformPlayer;
     [SerializeField] private float detectionRadius;
     [SerializeField] private float velocidad;
+    private Animator animator;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         var detectedPlayer = Physics.CheckSphere(transform.position, detectionRadius, playerLayer);
@@ -22,6 +21,7 @@ public class EnemyMovement : MonoBehaviour
             transform.LookAt(transformPlayer);
             transform.position = Vector3.MoveTowards(transform.position, transformPlayer.position, velocidad * Time.deltaTime);
         }
+        animator.SetBool("Running", detectedPlayer);
     }
 
     public void OnDrawGizmos()
