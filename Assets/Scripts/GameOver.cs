@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
-    private Animator animator;
+    [SerializeField] private Animator animator;
     private Rigidbody rigidbody;
 
     // === Cooldown de daño ===
@@ -38,6 +38,19 @@ public class GameOver : MonoBehaviour
         playerMovementScript = GameObject.Find("Ch22_nonPBR").GetComponent<PlayerMovement>();
         enemyMovementScriptCh30 = GameObject.Find("Ch30_nonPBR").GetComponent<EnemyMovement>();
         enemyMovementScriptParasite = GameObject.Find("Parasite L Starkie").GetComponent<EnemyMovement>();
+    }
+    public void Curar(float cantidad)
+    {
+        vida += cantidad;
+        if (vida > maxVida)
+            vida = maxVida;
+
+        // Opcional: reproducir animación de curación
+        if (animator)
+            animator.SetTrigger("Heal"); // asegúrate de tener una animación llamada "Heal"
+
+        // Opcional: sonido de curación
+        // audioSource.PlayOneShot(healSound); // si agregas un clip
     }
 
     void Update()

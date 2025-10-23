@@ -34,10 +34,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // Bloquear movimiento si está curando
+        if (animator.GetBool("isHealing"))
+            return;
         var checkSuelo = Physics.CheckSphere(posicionDetectorSuelo.position, 0.1f, layerSuelo);
         animator.SetBool("enSuelo", checkSuelo);
-        
-        
+
         inputSuave = Vector2.Lerp(inputSuave, movementInput, suavizarMovimiento * Time.deltaTime);
         animator.SetFloat("ejeX", inputSuave.x);
         animator.SetFloat("ejeY", inputSuave.y);
