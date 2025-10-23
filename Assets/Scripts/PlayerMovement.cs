@@ -46,4 +46,14 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movimientoPlayer = new Vector3(movementInput.x, 0, movementInput.y);
         transform.Translate(movimientoPlayer * velocidad * Time.deltaTime);
     }
+    public void BloquearMovimiento()
+    {
+        this.enabled = false;
+    }
+
+    public void ActivarMovimiento()
+    {
+        this.enabled = true;
+    }
+
 }

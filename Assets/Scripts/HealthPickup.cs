@@ -3,34 +3,44 @@ using UnityEngine;
 public class HealthPickup : MonoBehaviour
 {
     [Header("Curación")]
-    public float healAmount = 20f;       // Cuánto cura
-    public float respawnTime = 5f;       // Tiempo para reaparecer
+    public float healAmount = 20f;
+    public float respawnTime = 5f;
 
     [Header("Animación (opcional)")]
-    [SerializeField] private Animator playerAnimator; // arrastra aquí el Animator del jugador
-    [SerializeField] private string healTriggerName = "Heal"; // nombre del trigger en Animator
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private string healTriggerName = "Heal";
+    [SerializeField] private float healAnimationDuration = 8.3f; // duración estimada de la animación
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Llamar al método Curar del GameOver del jugador
             GameOver gameOverScript = other.GetComponent<GameOver>();
             if (gameOverScript != null)
             {
-                gameOverScript.Curar(healAmount); // Aumenta la vida
+                gameOverScript.Curar(healAmount);
             }
 
-            // Reproducir animación de curación
             if (playerAnimator != null && !string.IsNullOrEmpty(healTriggerName))
             {
                 playerAnimator.SetTrigger(healTriggerName);
+
+                // Desactivar movimiento
+                PlayerMovement movementScript = other.GetComponent<PlayerMovement>();
+                if (movementScript != null)
+                {
+                    movementScript.enabled = false;
+                    StartCoroutine(ReenableMovementAfterAnimation(movementScript));
+                }
             }
 
-            // Desactivar el remedio temporalmente
             gameObject.SetActive(false);
-
         }
     }
 
+    private System.Collections.IEnumerator ReenableMovementAfterAnimation(PlayerMovement movementScript)
+    {
+        yield return new WaitForSeconds(healAnimationDuration);
+        movementScript.enabled = true;
+    }
 }

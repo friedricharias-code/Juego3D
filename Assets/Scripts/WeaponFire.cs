@@ -29,7 +29,7 @@ public class WeaponFire : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             if (rb)
-                rb.velocity = muzzlePoint.forward * bulletSpeed;
+                rb.linearVelocity = muzzlePoint.forward * bulletSpeed;
         }
     }
 }
