@@ -4,43 +4,30 @@ public class HealthPickup : MonoBehaviour
 {
     [Header("Curación")]
     public float healAmount = 20f;
-    public float respawnTime = 5f;
 
-    [Header("Animación (opcional)")]
+    [Header("Animación")]
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private string healTriggerName = "Heal";
-    [SerializeField] private float healAnimationDuration = 8.3f; // duración estimada de la animación
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            // Curar al jugador
             GameOver gameOverScript = other.GetComponent<GameOver>();
             if (gameOverScript != null)
             {
                 gameOverScript.Curar(healAmount);
             }
 
+            // Activar animación de curación
             if (playerAnimator != null && !string.IsNullOrEmpty(healTriggerName))
             {
                 playerAnimator.SetTrigger(healTriggerName);
-
-                // Desactivar movimiento
-                PlayerMovement movementScript = other.GetComponent<PlayerMovement>();
-                if (movementScript != null)
-                {
-                    movementScript.enabled = false;
-                    StartCoroutine(ReenableMovementAfterAnimation(movementScript));
-                }
             }
 
+            // Desactivar el objeto del medicamento
             gameObject.SetActive(false);
         }
-    }
-
-    private System.Collections.IEnumerator ReenableMovementAfterAnimation(PlayerMovement movementScript)
-    {
-        yield return new WaitForSeconds(healAnimationDuration);
-        movementScript.enabled = true;
     }
 }
