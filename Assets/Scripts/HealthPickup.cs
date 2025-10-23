@@ -29,6 +29,7 @@ public class HealthPickup : MonoBehaviour
 
             // Desactivar el remedio temporalmente
             gameObject.SetActive(false);
+
         }
     }
 
