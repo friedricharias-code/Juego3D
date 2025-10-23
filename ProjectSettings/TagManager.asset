@@ -6,6 +6,7 @@ TagManager:
   tags:
   - llave
   - Enemigo
+  - Weapon
   layers:
   - Default
   - TransparentFX
