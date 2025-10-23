@@ -1,4 +1,7 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -15,9 +18,18 @@ public class EnemyMovement : MonoBehaviour
     private Animator animator;
     private bool persiguiendo = false;
 
+    [Header("Audio")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip SiguiendoSound;
+    [SerializeField] private AudioClip patrullandoSound;
+    [Header("Vida")]
+    public float vida = 10f;
+    public GameObject enemyObject;
+
     void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -30,6 +42,7 @@ public class EnemyMovement : MonoBehaviour
             // Perseguir al jugador
             transform.LookAt(transformPlayer);
             transform.position = Vector3.MoveTowards(transform.position, transformPlayer.position, velocidad * Time.deltaTime);
+            audioSource.PlayOneShot(SiguiendoSound);
         }
         else
         {
@@ -39,6 +52,7 @@ public class EnemyMovement : MonoBehaviour
                 Transform destino = patrolPoints[currentPoint];
                 transform.LookAt(destino);
                 transform.position = Vector3.MoveTowards(transform.position, destino.position, velocidad * Time.deltaTime);
+                audioSource.PlayOneShot(patrullandoSound);
 
                 if (Vector3.Distance(transform.position, destino.position) < 0.2f)
                 {
@@ -64,4 +78,16 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Weapon"))
+        {
+            vida -= 1f;
+            if (vida <= 0f)
+            {
+                enemyObject.SetActive(false);
+            }
+        }
+    }
+
 }
