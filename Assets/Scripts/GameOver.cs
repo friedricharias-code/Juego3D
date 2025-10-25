@@ -4,8 +4,7 @@ using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
-    private Rigidbody rigidbody;
+    private Animator animator;
 
     // === Cooldown de daño ===
     [SerializeField] private float damageCooldown = 0.3f; // en segundos
@@ -19,6 +18,7 @@ public class GameOver : MonoBehaviour
     [Header("Audio")]
     [SerializeField] AudioClip gameOverSound;
     [SerializeField] AudioClip hitSound;
+    [SerializeField] AudioClip AttackEnemySound;
     private AudioSource audioSource;
 
     [Header("Paneles")]
@@ -27,16 +27,17 @@ public class GameOver : MonoBehaviour
 
     private PlayerMovement playerMovementScript;
     private EnemyMovement enemyMovementScriptCh30;
+    private EnemyMovement enemyMovementScriptCh30_1;
     private EnemyMovement enemyMovementScriptParasite;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         maxVida = vida;
         playerMovementScript = GameObject.Find("Ch22_nonPBR").GetComponent<PlayerMovement>();
         enemyMovementScriptCh30 = GameObject.Find("Ch30_nonPBR").GetComponent<EnemyMovement>();
+        enemyMovementScriptCh30_1 = GameObject.Find("Ch30_nonPBR1").GetComponent<EnemyMovement>();
         enemyMovementScriptParasite = GameObject.Find("Parasite L Starkie").GetComponent<EnemyMovement>();
     }
     public void Curar(float cantidad)
@@ -75,6 +76,7 @@ public class GameOver : MonoBehaviour
 
         // ↓ primero baja vida
         vida = Mathf.Max(vida - 10, 0);
+        audioSource.PlayOneShot(AttackEnemySound);
 
         if (vida <= 0)
         {
@@ -83,15 +85,14 @@ public class GameOver : MonoBehaviour
         }
 
         audioSource.PlayOneShot(hitSound);
-        animator.SetTrigger("Hurt");
     }
 
     void Perder()
     {
-        animator.ResetTrigger("Hurt"); // evita que Hurt bloquee GameOver
         playerMovementScript.enabled = false;
         enemyMovementScriptCh30.enabled = false;
         enemyMovementScriptParasite.enabled = false;
+        enemyMovementScriptCh30_1.enabled = false;
         gameOverPanel.SetActive(true);
         gamePanel.SetActive(false);
         audioSource.PlayOneShot(gameOverSound);

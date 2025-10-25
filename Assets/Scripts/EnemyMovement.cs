@@ -5,7 +5,7 @@ using UnityEngine.Video;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [Header("Detección")]
+    [Header("DetecciÃ³n")]
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private Transform transformPlayer;
     [SerializeField] private float detectionRadius = 5f;
@@ -20,8 +20,10 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Audio")]
     private AudioSource audioSource;
-    [SerializeField] private AudioClip SiguiendoSound;
     [SerializeField] private AudioClip patrullandoSound;
+    private float tiempoUltimoSonido;
+    private float intervaloSonido;
+
     [Header("Vida")]
     public float vida = 10f;
     public GameObject enemyObject;
@@ -30,6 +32,7 @@ public class EnemyMovement : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        intervaloSonido = patrullandoSound.length + 0.1f;
     }
 
     void Update()
@@ -42,7 +45,6 @@ public class EnemyMovement : MonoBehaviour
             // Perseguir al jugador
             transform.LookAt(transformPlayer);
             transform.position = Vector3.MoveTowards(transform.position, transformPlayer.position, velocidad * Time.deltaTime);
-            audioSource.PlayOneShot(SiguiendoSound);
         }
         else
         {
@@ -52,7 +54,6 @@ public class EnemyMovement : MonoBehaviour
                 Transform destino = patrolPoints[currentPoint];
                 transform.LookAt(destino);
                 transform.position = Vector3.MoveTowards(transform.position, destino.position, velocidad * Time.deltaTime);
-                audioSource.PlayOneShot(patrullandoSound);
 
                 if (Vector3.Distance(transform.position, destino.position) < 0.2f)
                 {
@@ -62,6 +63,13 @@ public class EnemyMovement : MonoBehaviour
         }
 
         animator.SetBool("Running", true); // siempre en movimiento
+
+        // Reproducir sonido de patrulla
+        if (!audioSource.isPlaying && Time.time - tiempoUltimoSonido >= intervaloSonido)
+        {
+            audioSource.PlayOneShot(patrullandoSound);
+            tiempoUltimoSonido = Time.time;
+        }
     }
 
     void OnDrawGizmos()

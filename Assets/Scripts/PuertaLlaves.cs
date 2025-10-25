@@ -2,22 +2,24 @@ using UnityEngine;
 
 public class PuertaLlaves : MonoBehaviour
 {
-    [Header("Configuración")]
+    [Header("Configuraciï¿½n")]
     [SerializeField] private int llavesNecesarias = 3;
     [SerializeField] private Transform puerta;
     [SerializeField] private Transform posicionFinal;
-    [SerializeField] private Vector3 rotacionFinalEuler; // rotación en grados
+    [SerializeField] private Vector3 rotacionFinalEuler; // rotaciï¿½n en grados
     [SerializeField] private float velocidad = 2f;
 
     private bool abrir = false;
     private Quaternion rotacionFinal;
     private EnemyMovement enemyMovementScriptCh30;
+    private EnemyMovement enemyMovementScriptCh30_1;
     private EnemyMovement enemyMovementScriptParasite;
 
     private void Start()
     {
         rotacionFinal = Quaternion.Euler(rotacionFinalEuler);
         enemyMovementScriptCh30 = GameObject.Find("Ch30_nonPBR").GetComponent<EnemyMovement>();
+        enemyMovementScriptCh30_1 = GameObject.Find("Ch30_nonPBR1").GetComponent<EnemyMovement>();
         enemyMovementScriptParasite = GameObject.Find("Parasite L Starkie").GetComponent<EnemyMovement>();
     }
 
@@ -31,6 +33,7 @@ public class PuertaLlaves : MonoBehaviour
                 abrir = true;
                 enemyMovementScriptCh30.enabled = false;
                 enemyMovementScriptParasite.enabled = false;
+                enemyMovementScriptCh30_1.enabled = false;
             }
         }
     }
