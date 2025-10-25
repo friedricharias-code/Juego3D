@@ -48,6 +48,9 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         intervaloRespiracion = respiraSound.length + 0.5f;
+
+        // Configurar el Rigidbody para mejor control
+        rb.freezeRotation = true;
     }
 
     void Update()
@@ -55,21 +58,41 @@ public class PlayerMovement : MonoBehaviour
         // Bloquear movimiento si está curando
         if (animator.GetBool("isHealing"))
             return;
+
         var checkSuelo = Physics.CheckSphere(posicionDetectorSuelo.position, 0.1f, layerSuelo);
         animator.SetBool("enSuelo", checkSuelo);
 
+        // Actualizar animaciones
         inputSuave = Vector2.Lerp(inputSuave, movementInput, suavizarMovimiento * Time.deltaTime);
         animator.SetFloat("ejeX", inputSuave.x);
         animator.SetFloat("ejeY", inputSuave.y);
-        Vector3 movimientoPlayer = new Vector3(movementInput.x, 0, movementInput.y);
-        transform.Translate(movimientoPlayer * velocidad * Time.deltaTime);
-        
-        if (movimientoPlayer.magnitude > 0.1f && !audioSource.isPlaying && Time.time - tiempoUltimaRespiracion >= intervaloRespiracion)
+
+        // Manejar el audio
+        if (!audioSource.isPlaying && Time.time - tiempoUltimaRespiracion >= intervaloRespiracion)
         {
             audioSource.PlayOneShot(respiraSound);
             tiempoUltimaRespiracion = Time.time;
         }
     }
+
+    void FixedUpdate()
+    {
+        if (animator.GetBool("isHealing"))
+            return;
+
+        // Obtener la velocidad actual
+        Vector3 currentVelocity = rb.linearVelocity;
+
+        // Crear vector de movimiento
+        Vector3 targetVelocity = new Vector3(movementInput.x, 0, movementInput.y);
+        targetVelocity = transform.TransformDirection(targetVelocity);
+        targetVelocity *= velocidad;
+
+        // Aplicar el movimiento suavizado
+        Vector3 velocityChange = targetVelocity - new Vector3(currentVelocity.x, 0, currentVelocity.z);
+        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+    }
+    
     public void BloquearMovimiento()
     {
         this.enabled = false;
