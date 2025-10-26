@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;     
+using System.Collections;
 
 public class GameOver : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class GameOver : MonoBehaviour
     [SerializeField] AudioClip gameOverSound;
     [SerializeField] AudioClip hitSound;
     [SerializeField] AudioClip AttackEnemySound;
+    [SerializeField] AudioClip dolor;
     private AudioSource audioSource;
 
     [Header("Paneles")]
@@ -29,7 +32,7 @@ public class GameOver : MonoBehaviour
     private EnemyMovement enemyMovementScriptCh30;
     private EnemyMovement enemyMovementScriptCh30_1;
     private EnemyMovement enemyMovementScriptParasite;
-
+    private bool dolorSonando = false;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -62,8 +65,15 @@ public class GameOver : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemigo"))
+        { 
             RecibirDaño();
+        }
     }
+    private IEnumerator EsperarFinSonido(float duracion, System.Action accion)
+    {
+        yield return new WaitForSeconds(duracion);
+        accion.Invoke();
+    } 
 
     void RecibirDaño()
     {
@@ -76,6 +86,12 @@ public class GameOver : MonoBehaviour
 
         // ↓ primero baja vida
         vida = Mathf.Max(vida - 10, 0);
+        if (!dolorSonando && dolor != null)
+        {
+            audioSource.PlayOneShot(dolor);
+            StartCoroutine(EsperarFinSonido(dolor.length, () => dolorSonando = false));
+            dolorSonando = true;
+        }
         audioSource.PlayOneShot(AttackEnemySound);
 
         if (vida <= 0)
@@ -88,6 +104,11 @@ public class GameOver : MonoBehaviour
     }
 
     void Perder()
+    {
+        animator.SetTrigger("Death");
+        
+    }
+    public void Muerte()
     {
         playerMovementScript.enabled = false;
         enemyMovementScriptCh30.enabled = false;

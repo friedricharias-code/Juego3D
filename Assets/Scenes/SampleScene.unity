@@ -2151,6 +2151,8 @@ MonoBehaviour:
   - {fileID: 1099515747}
   - {fileID: 1181188747}
   patrullandoSound: {fileID: 8300000, guid: 41e1c73c5915dee4986cc50c42601e15, type: 3}
+  muerte: {fileID: 8300000, guid: 1b805be86ccece8458718b37c87fa7c1, type: 3}
+  danio: {fileID: 8300000, guid: fa59b4ea7c51d2e4da12c9c2676a8c25, type: 3}
   vida: 3
   enemyObject: {fileID: 250590004}
 --- !u!54 &250590007
@@ -5428,6 +5430,8 @@ MonoBehaviour:
   - {fileID: 1393713565}
   - {fileID: 1022748735}
   patrullandoSound: {fileID: 8300000, guid: 41e1c73c5915dee4986cc50c42601e15, type: 3}
+  muerte: {fileID: 8300000, guid: 1b805be86ccece8458718b37c87fa7c1, type: 3}
+  danio: {fileID: 8300000, guid: fa59b4ea7c51d2e4da12c9c2676a8c25, type: 3}
   vida: 10
   enemyObject: {fileID: 483325657}
 --- !u!54 &483325660
@@ -13066,9 +13070,10 @@ MonoBehaviour:
   damageCooldown: 0.3
   vida: 100
   barraVida: {fileID: 1516950428}
-  gameOverSound: {fileID: 0}
+  gameOverSound: {fileID: 8300000, guid: ad2b3d7448100574093d218b191d74bd, type: 3}
   hitSound: {fileID: 0}
   AttackEnemySound: {fileID: 8300000, guid: 222a41939101b554cac4c017b10faedf, type: 3}
+  dolor: {fileID: 8300000, guid: a347d05ea95b997448bed7c990733e76, type: 3}
   gameOverPanel: {fileID: 1949499414}
   gamePanel: {fileID: 1185679147}
 --- !u!114 &1089625650
@@ -16420,6 +16425,8 @@ MonoBehaviour:
   - {fileID: 694501831}
   - {fileID: 1634669698}
   patrullandoSound: {fileID: 8300000, guid: 41e1c73c5915dee4986cc50c42601e15, type: 3}
+  muerte: {fileID: 8300000, guid: 1b805be86ccece8458718b37c87fa7c1, type: 3}
+  danio: {fileID: 8300000, guid: fa59b4ea7c51d2e4da12c9c2676a8c25, type: 3}
   vida: 3
   enemyObject: {fileID: 1279878341}
 --- !u!54 &1279878346

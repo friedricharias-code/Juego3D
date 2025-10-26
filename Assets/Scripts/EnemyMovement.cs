@@ -21,6 +21,8 @@ public class EnemyMovement : MonoBehaviour
     [Header("Audio")]
     private AudioSource audioSource;
     [SerializeField] private AudioClip patrullandoSound;
+    [SerializeField] private AudioClip muerte;
+    [SerializeField] private AudioClip danio;
     private float tiempoUltimoSonido;
     private float intervaloSonido;
 
@@ -91,11 +93,19 @@ public class EnemyMovement : MonoBehaviour
         if (other.CompareTag("Weapon"))
         {
             vida -= 1f;
+            audioSource.PlayOneShot(danio);
             if (vida <= 0f)
             {
-                enemyObject.SetActive(false);
+                animator.SetTrigger("Die");
+                audioSource.PlayOneShot(muerte);
             }
         }
     }
+
+    public void Muerte()
+    {
+        enemyObject.SetActive(false);
+    }
+
 
 }
