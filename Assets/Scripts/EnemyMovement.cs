@@ -29,11 +29,13 @@ public class EnemyMovement : MonoBehaviour
     [Header("Vida")]
     public float vida = 10f;
     public GameObject enemyObject;
+    private Collider collider;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        collider = GetComponent<Collider>();
         intervaloSonido = patrullandoSound.length + 0.1f;
     }
 
@@ -98,6 +100,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 animator.SetTrigger("Die");
                 audioSource.PlayOneShot(muerte);
+                collider.enabled = false;
             }
         }
     }

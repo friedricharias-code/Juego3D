@@ -99,15 +99,13 @@ public class GameOver : MonoBehaviour
             Perder();
             return; // no dispares Hurt ni knockback
         }
-
-        audioSource.PlayOneShot(hitSound);
     }
 
     void Perder()
     {
         animator.SetTrigger("Death");
-        
     }
+
     public void Muerte()
     {
         playerMovementScript.enabled = false;
