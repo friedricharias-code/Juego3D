@@ -6,7 +6,17 @@ public class CollectKeys : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI keyText;
     private int keysCollected = 0;
 
-    public int KeysCollected => keysCollected; // propiedad p˙blica
+    [Header("Audio")]
+    [SerializeField] private AudioClip keyCollectSound;
+    private AudioSource audioSource;
+
+    public int KeysCollected => keysCollected; // propiedad p√∫blica
+
+    private void Start()
+    {
+        keyText.text = "Llaves: " + keysCollected;
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void OnTriggerEnter(Collider collision)
     {
@@ -14,7 +24,8 @@ public class CollectKeys : MonoBehaviour
         {
             keysCollected++;
             keyText.text = "Llaves: " + keysCollected;
-            Destroy(collision.gameObject);
+            audioSource.PlayOneShot(keyCollectSound);
+            Destroy(collision.gameObject, keyCollectSound.length);
         }
     }
 }

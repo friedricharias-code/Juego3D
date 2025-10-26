@@ -2,28 +2,39 @@ using UnityEngine;
 
 public class HealthPickup : MonoBehaviour
 {
-    [Header("Curación")]
+    [Header("Curacion")]
     public float healAmount = 20f;
 
-    [Header("Animación")]
+    [Header("Animacion")]
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private string healTriggerName = "Heal";
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip healSound;
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+
+            // Activar animacion de curacion
+            if (playerAnimator != null && !string.IsNullOrEmpty(healTriggerName))
+            {
+                playerAnimator.SetTrigger(healTriggerName);
+                audioSource.PlayOneShot(healSound);
+            }
+            
             // Curar al jugador
             GameOver gameOverScript = other.GetComponent<GameOver>();
             if (gameOverScript != null)
             {
                 gameOverScript.Curar(healAmount);
-            }
-
-            // Activar animación de curación
-            if (playerAnimator != null && !string.IsNullOrEmpty(healTriggerName))
-            {
-                playerAnimator.SetTrigger(healTriggerName);
             }
 
             // Desactivar el objeto del medicamento
