@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using static System.Collections.IEnumerator;
 
 public class HealthPickup : MonoBehaviour
 {
@@ -22,23 +24,31 @@ public class HealthPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
-            // Activar animacion de curacion
+            // Activar animación
             if (playerAnimator != null && !string.IsNullOrEmpty(healTriggerName))
-            {
                 playerAnimator.SetTrigger(healTriggerName);
-                audioSource.PlayOneShot(healSound);
-            }
-            
+
+            // Reproducir sonido
+            AudioSource.PlayClipAtPoint(healSound, transform.position);
+
             // Curar al jugador
             GameOver gameOverScript = other.GetComponent<GameOver>();
             if (gameOverScript != null)
-            {
                 gameOverScript.Curar(healAmount);
-            }
 
-            // Desactivar el objeto del medicamento
-            gameObject.SetActive(false);
+            // Hacer invisible el objeto
+            foreach (Renderer rend in GetComponentsInChildren<Renderer>())
+                rend.enabled = false;
+
+            // Destruir al terminar el sonido
+            StartCoroutine(DestruirDespuesDeSonido(healSound.length));
         }
     }
+
+    private IEnumerator DestruirDespuesDeSonido(float duracion)
+    {
+        yield return new WaitForSeconds(duracion);
+        Destroy(gameObject);
+    }
+
 }

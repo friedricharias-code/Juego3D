@@ -4308,9 +4308,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthPickup
   healAmount: 20
-  playerAnimator: {fileID: 1089625652}
+  playerAnimator: {fileID: 0}
   healTriggerName: Heal
-  healSound: {fileID: 8300000, guid: 4d2c3b4d80183a041b6ecab1300ee994, type: 3}
+  healSound: {fileID: 8300000, guid: eb1443267b570dc49aecba7c1f23ab67, type: 3}
 --- !u!4 &410110869 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7348643258206407952, guid: b76de77e9e36a1c44b094c10711555eb, type: 3}
@@ -8734,7 +8734,7 @@ MonoBehaviour:
   healAmount: 20
   playerAnimator: {fileID: 0}
   healTriggerName: Heal
-  healSound: {fileID: 8300000, guid: 4d2c3b4d80183a041b6ecab1300ee994, type: 3}
+  healSound: {fileID: 8300000, guid: eb1443267b570dc49aecba7c1f23ab67, type: 3}
 --- !u!4 &710610555 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7348643258206407952, guid: b76de77e9e36a1c44b094c10711555eb, type: 3}
@@ -13033,7 +13033,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1089625638}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: OnJump
+        m_MethodName: OnRun
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13103,13 +13103,13 @@ MonoBehaviour:
     m_ActionName: 'Player/Shoot[/Mouse/leftButton]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1089625638}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: OnRun
-        m_Mode: 0
+      - m_Target: {fileID: 1089625637}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13334,11 +13334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fd98675116b4e48a797df7cb4a655e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponFire
---- !u!95 &1089625652 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 70744c718daced24ab54d772c8116c79, type: 3}
-  m_PrefabInstance: {fileID: 1089625636}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1096025265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23521,7 +23516,7 @@ MonoBehaviour:
   healAmount: 20
   playerAnimator: {fileID: 0}
   healTriggerName: Heal
-  healSound: {fileID: 8300000, guid: 4d2c3b4d80183a041b6ecab1300ee994, type: 3}
+  healSound: {fileID: 8300000, guid: eb1443267b570dc49aecba7c1f23ab67, type: 3}
 --- !u!4 &1827245280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7348643258206407952, guid: b76de77e9e36a1c44b094c10711555eb, type: 3}
@@ -26491,9 +26486,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthPickup
   healAmount: 20
-  playerAnimator: {fileID: 1089625652}
+  playerAnimator: {fileID: 0}
   healTriggerName: Heal
-  healSound: {fileID: 8300000, guid: 4d2c3b4d80183a041b6ecab1300ee994, type: 3}
+  healSound: {fileID: 8300000, guid: eb1443267b570dc49aecba7c1f23ab67, type: 3}
 --- !u!4 &2034929093 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 475148, guid: b826295956c65444987d7baae67c5858, type: 3}
@@ -26644,7 +26639,7 @@ MonoBehaviour:
   healAmount: 20
   playerAnimator: {fileID: 0}
   healTriggerName: Heal
-  healSound: {fileID: 8300000, guid: 4d2c3b4d80183a041b6ecab1300ee994, type: 3}
+  healSound: {fileID: 8300000, guid: eb1443267b570dc49aecba7c1f23ab67, type: 3}
 --- !u!4 &2046411440 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7348643258206407952, guid: b76de77e9e36a1c44b094c10711555eb, type: 3}
