@@ -8,6 +8,7 @@ TagManager:
   - Enemigo
   - Weapon
   - Victoria
+  - puerta
   layers:
   - Default
   - TransparentFX
