@@ -62,13 +62,14 @@ public class GameOver : MonoBehaviour
         barraVida.fillAmount = vida / maxVida;
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemigo"))
-        { 
-            RecibirDaño();
+        {
+            RecibirDaño(); // se llama cada frame mientras haya contacto
         }
     }
+
     private IEnumerator EsperarFinSonido(float duracion, System.Action accion)
     {
         yield return new WaitForSeconds(duracion);

@@ -31,6 +31,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject enemyObject;
     private Collider collider;
 
+
     void Start()
     {
         animator = GetComponent<Animator>();
