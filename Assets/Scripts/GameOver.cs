@@ -27,6 +27,7 @@ public class GameOver : MonoBehaviour
     [Header("Paneles")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject gamePanel;
+    [SerializeField] private GameObject cargandoPanel;
 
     private PlayerMovement playerMovementScript;
     private EnemyMovement enemyMovementScriptCh30;
@@ -121,5 +122,12 @@ public class GameOver : MonoBehaviour
     public void ReiniciarNivel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void SalirAlMenu()
+    {
+        cargandoPanel.SetActive(true);
+        gameOverPanel.SetActive(false);
+        SceneManager.LoadScene("Menu");
     }
 }
