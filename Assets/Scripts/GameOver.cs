@@ -117,6 +117,8 @@ public class GameOver : MonoBehaviour
         gameOverPanel.SetActive(true);
         gamePanel.SetActive(false);
         audioSource.PlayOneShot(gameOverSound);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void ReiniciarNivel()

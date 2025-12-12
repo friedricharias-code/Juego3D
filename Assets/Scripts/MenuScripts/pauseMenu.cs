@@ -7,6 +7,7 @@ public class pauseMenu : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject opcionesPanel; // si quieres opciones dentro del pause
     [SerializeField] private GameObject fondoOscuro;   // opcional
+    [SerializeField] private GameObject cargandoPanel; // opcional
 
     private bool isPaused = false;
 
@@ -15,6 +16,7 @@ public class pauseMenu : MonoBehaviour
         pausePanel.SetActive(false);
         if (opcionesPanel != null) opcionesPanel.SetActive(false);
         if (fondoOscuro != null) fondoOscuro.SetActive(false);
+        if (cargandoPanel != null) cargandoPanel.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -66,7 +68,10 @@ public class pauseMenu : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Menu"); // pon el nombre real de tu menú
+        if (fondoOscuro != null) fondoOscuro.SetActive(false);
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (cargandoPanel != null) cargandoPanel.SetActive(true);
+        SceneManager.LoadScene("Menu"); // pon el nombre real de tu menÃº
     }
 
     public void abrirOpcionesDePausa()

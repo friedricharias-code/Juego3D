@@ -26,5 +26,7 @@ public class Win : MonoBehaviour
     {
         winPanel.SetActive(true);
         gamePanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
